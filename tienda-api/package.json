@@ -1,0 +1,19 @@
+{
+  "name": "tienda-api",
+  "version": "1.0.0",
+  "description": "API REST de productos y usuarios con Node.js, Express y MySQL (arquitectura por capas)",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test:db": "node test-db.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mysql2": "^3.11.5"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.10"
+  }
+}

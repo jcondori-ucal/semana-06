@@ -1,0 +1,32 @@
+### Pruebas (REST Client / Thunder Client / Postman)
+@base = http://localhost:3000
+
+### Salud de la conexión con MySQL
+GET {{base}}/api/health/db
+
+### Listar (SELECT)
+GET {{base}}/api/productos
+
+### Obtener por id (SELECT ... WHERE)
+GET {{base}}/api/productos/2
+
+### Crear (INSERT)
+POST {{base}}/api/productos
+Content-Type: application/json
+
+{ "nombre": "Webcam Logitech C270", "categoria": "Accesorios", "precio": 119.90, "stock": 10 }
+
+### Actualizar (UPDATE)
+PUT {{base}}/api/productos/6
+Content-Type: application/json
+
+{ "nombre": "Webcam Logitech C270 HD", "categoria": "Accesorios", "precio": 109.90, "stock": 7 }
+
+### Eliminar (DELETE)
+DELETE {{base}}/api/productos/6
+
+### Error 400 (falta precio)
+POST {{base}}/api/productos
+Content-Type: application/json
+
+{ "nombre": "Sin precio", "categoria": "Test" }

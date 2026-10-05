@@ -1,0 +1,27 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: tienda_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      # 3307 en tu máquina para no chocar con un MySQL local (Workbench: localhost:3307)
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      # Los .sql de esta carpeta se ejecutan solo la PRIMERA vez (volumen vacío), en orden alfabético
+      - ./database:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+ 
+
+volumes:
+  mysql_data:

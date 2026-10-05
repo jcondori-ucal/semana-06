@@ -1,0 +1,32 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: s6-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3307:3306"          # 3307 en tu PC para no chocar con un MySQL local
+    volumes:
+      - mysql_data:/var/lib/mysql                     # persistencia real
+      - ./db/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+ 
+
+  adminer:                   # cliente web para ver la BD: http://localhost:8080
+    image: adminer
+    container_name: s6-adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+volumes:
+  mysql_data:
